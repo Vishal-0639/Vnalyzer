@@ -2,6 +2,8 @@ package com.vnalyzer.backend.service;
 
 import org.springframework.stereotype.Service;
 
+import java.util.*;
+
 import com.vnalyzer.backend.model.User;
 import com.vnalyzer.backend.repository.UserRepository;
 
@@ -16,6 +18,25 @@ public class UserService {
 
     public User createUser(User user){
         return repo.save(user);
+    }
+
+    public List<User> getAllUser(){
+        return repo.findAll();
+    }
+
+    public User getUserById(Long id){
+        return repo.findById(id).orElseThrow();
+    }
+
+    public User updateById(Long id,User userdetails){
+        User ex = getUserById(id);
+        ex.setEmail(userdetails.getEmail());
+        ex.setName(userdetails.getName());
+        ex.setPassword(userdetails.getPassword());
+        return repo.save(ex);
+    }
+    public void deleteUserById(Long id){
+        repo.deleteById(id);
     }
 
     
