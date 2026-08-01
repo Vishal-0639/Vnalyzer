@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import com.vnalyzer.backend.exception.ResourceNotFoundException;
 import com.vnalyzer.backend.model.User;
 import com.vnalyzer.backend.repository.UserRepository;
 
@@ -25,7 +26,7 @@ public class UserService {
     }
 
     public User getUserById(Long id){
-        return repo.findById(id).orElseThrow();
+        return repo.findById(id).orElseThrow(()-> new ResourceNotFoundException("User not found with id: "+id));
     }
 
     public User updateById(Long id,User userdetails){
@@ -36,6 +37,7 @@ public class UserService {
         return repo.save(ex);
     }
     public void deleteUserById(Long id){
+        getUserById(id);
         repo.deleteById(id);
     }
 

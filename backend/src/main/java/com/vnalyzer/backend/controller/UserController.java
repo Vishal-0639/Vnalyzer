@@ -9,6 +9,8 @@ import java.util.*;
 import com.vnalyzer.backend.model.User;
 import com.vnalyzer.backend.service.UserService;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +29,7 @@ public class UserController {
     }
     //post
     @PostMapping
-    public User createUser(@RequestBody User user){
+    public User createUser(@Valid @RequestBody User user){
         return service.createUser(user);
 
     }
@@ -44,7 +46,7 @@ public class UserController {
     }
     //updatebyid
     @PutMapping("/{id}")
-    public User updateById(@PathVariable Long id,@RequestBody User userdetails){
+    public User updateById(@PathVariable Long id,@Valid @RequestBody User userdetails){
         return service.updateById(id,userdetails);
     }
     //deleteByid
