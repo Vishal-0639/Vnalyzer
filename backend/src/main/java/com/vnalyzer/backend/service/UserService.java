@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import com.vnalyzer.backend.exception.DuplicateResourceException;
 import com.vnalyzer.backend.exception.ResourceNotFoundException;
 import com.vnalyzer.backend.model.User;
 import com.vnalyzer.backend.repository.UserRepository;
@@ -18,6 +19,9 @@ public class UserService {
     }
 
     public User createUser(User user){
+        if(repo.existsByEmail(user.getEmail())){
+            throw new DuplicateResourceException("User with the email "+user.getEmail()+" already exist");
+        }
         return repo.save(user);
     }
 
